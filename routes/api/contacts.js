@@ -10,12 +10,14 @@ const {
   updateFavorite
 } = require("../../controlers/controlers")
 const router = express.Router();
+const { authenticate } = require("../../midWare/auth");
 
-router.get("/", wrapper(listContacts));
-router.get("/:contactId", wrapper(getContactById));
-router.post("/", validator(joi), wrapper(addContact));
-router.delete("/:contactId", wrapper(removeContactById));
-router.put("/:contactId", validator(joi), wrapper( updateById));
+
+router.get("/", authenticate, wrapper(listContacts));
+router.get("/:contactId", authenticate, wrapper(getContactById));
+router.post("/", validator(joi), authenticate, wrapper(addContact));
+router.delete("/:contactId", authenticate, wrapper(removeContactById));
+router.put("/:contactId", authenticate, validator(joi), wrapper( updateById));
 router.patch(
   "/:contactId/favorite",
   validator(joiFavorite),

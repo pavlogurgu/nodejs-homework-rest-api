@@ -1,5 +1,5 @@
 const { Contact } = require("../schemas/schemas");
-const { HttpError } = require("../midWare/index");
+const { HttpError } = require("../midWare/index"); 
 
 const listContacts = async (req, res) => {
         const result = await Contact.find({});
@@ -45,8 +45,8 @@ const listContacts = async (req, res) => {
   }
   
   const addContact = async (req, res) => {
-
-        const result = await Contact.create(req.body);
+        const { _id: owner } = req.user;
+        const result = await Contact.create({...req.body, owner});
         res.status(201).json({ 
             status: "done", 
             code: 201, 

@@ -12,6 +12,9 @@ app.use(logger(formatsLogger))
 app.use(cors())
 app.use(express.json())
 
+const authRouter = require("./routes/api/auth");
+
+app.use("/api/auth", authRouter);
 app.use('/api/contacts', contactsRouter)
 
 app.use((req, res) => {
