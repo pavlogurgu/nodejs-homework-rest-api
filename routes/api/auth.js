@@ -7,8 +7,10 @@ const {
   getCurrent,
   logout,
   updateAvatar,
+  verify,
+  verifyAgain,
 } = require("../../controlers/auth");
-const { registerSchema, loginSchema } = require("../../schemas/user");
+const { registerSchema, loginSchema,  verifySchema, } = require("../../schemas/user");
 const { authenticate } = require("../../midWare/auth");
 const multer = require("multer");
 const path = require("path");
@@ -34,4 +36,6 @@ router.patch(
   upload.single("avatar"),
   wrapper(updateAvatar)
 );
+router.get("/users/verify/:verificationToken", verify);
+router.post("/users/verify", validator(verifySchema), wrapper(verifyAgain));
 module.exports = router;
