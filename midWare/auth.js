@@ -13,8 +13,8 @@ const authenticate = async (req, res, next) => {
   }
 
   try {
-    const { id } = jwt.verify(token, SECRET_KEY);
-    const user = await User.findById(id);
+    const payload = jwt.verify(token, SECRET_KEY);
+    const user = await User.findById(payload.id);
     if (!user || !user.token || token !== String(user.token)) {
       next(HttpError(401, "Email in use"));
     }
